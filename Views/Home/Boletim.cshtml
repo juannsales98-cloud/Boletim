@@ -1,0 +1,68 @@
+@{
+    ViewData["Title"] = "Meu Boletim Escolar";
+
+    var materias = ViewBag.Materias as List<string>;
+    var notas = ViewBag.Notas as List<int>;
+
+    double somaDasNotas = 0;
+}
+
+<h2>Meu Boletim (UNINOVE)</h2>
+
+<table class="table" border="1" style="border-collapse: collapse; width: 70%; text-align: left;">
+    <thead>
+        <tr style="background-color: #f2f2f2;">
+            <th>Disciplina</th>
+            <th>Nota</th>
+            <th>Status</th>
+            <th>Classificação</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < materias.Count; i++)
+        {
+            somaDasNotas = somaDasNotas + notas[i];
+
+            <tr>
+                <td>@materias[i]</td>
+                <td>@notas[i]</td> @if (notas[i] >= 6)
+                {
+                    <td style="color: green; font-weight: bold;">Aprovado</td>
+                }
+                else
+                {
+                    <td style="color: red; font-weight: bold;">Reprovado</td>
+                }
+
+                <td>
+                    @switch (notas[i])
+                    {
+                        case 10:
+                        case 9:
+                            <span style="font-weight: bold; color: blue;">A</span>
+                            break;
+                        case 8:
+                        case 7:
+                            <span style="font-weight: bold; color: green;">B</span>
+                            break;
+                        case 6:
+                        case 5:
+                            <span style="font-weight: bold; color: orange;">C</span>
+                            break;
+                        default:
+                            <span style="font-weight: bold; color: red;">D</span>
+                            break;
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+@{
+    
+    double mediaGeral = somaDasNotas / materias.Count;
+}
+
+<p><strong>Média Geral do Semestre: @mediaGeral.ToString("F1")</strong></p>
